@@ -7,6 +7,7 @@ export default function AlertDialog(msg, isOpen, onConfirm, onCancel) {
 
     const [body, setBody] = useState(msg);
     const [showModal, setShowModal] = useState(msg.isOpen);
+
     const handleConfirm = () => {
         msg.onConfirm && msg.onConfirm();
         setShowModal(false);

@@ -36,20 +36,16 @@ export const UserDashboard = () => {
         setShowModal(false);
     }
 
-    const handleConfirm = (id) => {
+    const handleConfirm = () => {
         setShowModal(false);
-        console.log("Delete record: "+id);
         const updatedData = tableData.filter((item) => item.id !== id);
-        console.log(tableData);
         setTableData(updatedData);
-        console.log(updatedData);
     }
 
     const handleChange = (event, property) => {
         setNewRecordData({ ...newRecordData, [property]: event.target.value })
     }
     const column = Object.keys(tableData[0]);
-    // console.log(Object.keys(tableData))
     const thData = () => {
         return column.filter(key => key !== "id").map((data) => {
             return <th key={data}>{data.charAt(0).toUpperCase()+data.slice(1)}</th>
@@ -228,7 +224,7 @@ export const UserDashboard = () => {
                         msg={"Do you really want to delete record?"} 
                         isOpen={showModal} 
                         onCancel={handleCancel}
-                        onConfirm={handleConfirm(id)}
+                        onConfirm={handleConfirm}
                     />
                 </>
             )}
