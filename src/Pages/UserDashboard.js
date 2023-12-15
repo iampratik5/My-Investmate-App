@@ -14,6 +14,7 @@ export const UserDashboard = () => {
     ]
     const [id, setId] = useState('');
     const [newRecordData, setNewRecordData] = useState({
+        id:'',
         investment: '',
         date: '',
         amount: 0
@@ -81,11 +82,10 @@ export const UserDashboard = () => {
     const addRecord = (event) => {
         event.preventDefault();
         tableData.push(newRecordData);
-
     }
 
     useEffect(() => {
-        
+
     }, [tableData]);
 
     const insertData = () => {
@@ -132,6 +132,8 @@ export const UserDashboard = () => {
                                 name="date"
                                 placeholder="Date"
                                 type="date"
+                                // defaultValue={new Date().toLocaleDateString()}
+                                // defaultValue={new Date().toISOString().slice(0, 10)}
                                 onChange={(e) => handleChange(e, 'date')} 
                                 value={tableData.Date}
                             />
