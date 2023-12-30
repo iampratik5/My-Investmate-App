@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { UserDashboard } from "../Pages/UserDashboard";
+import { Dashboard } from "../Pages/Dashboard";
 import { useNavigate } from "react-router-dom";
 
 export default function AlertDialog(msg, isOpen, onConfirm, onCancel) {

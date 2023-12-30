@@ -1,4 +1,4 @@
-import { NavLink, Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Link, NavLink, Navigate, Outlet, useNavigate } from "react-router-dom";
 import { isLoggedIn } from "../auth";
 import Base from "../components/Base";
 import { Toasts } from "../components/Toasts";
@@ -7,31 +7,31 @@ import { Button, ButtonGroup, ButtonToolbar, Card, CardBody, CardHeader, Col, Co
 import AlertDialog from "../components/AlertDialogue";
 
 
-export const UserDashboard = () => {
+export const Dashboard = () => {
     const tData = [
         { id: 111, investment: "FD", date: "12/13/2023", amount: 100 },
         { id: 222, investment: "MF", date: "12/13/2023", amount: 200 }
     ]
     const [id, setId] = useState('');
     const [newRecordData, setNewRecordData] = useState({
-        id:'',
+        id: '',
         investment: '',
         date: '',
         amount: 0
     })
     const [tableData, setTableData] = useState(tData);
-    
+
     const [error, setError] = useState({
         errors: [],
         isError: false
     });
-    
+
     const [showModal, setShowModal] = useState(false);
 
     const handleDeleteItem = (id) => {
         setShowModal(true);
         setId(id);
-      };
+    };
 
     const handleCancel = () => {
         setShowModal(false);
@@ -49,18 +49,28 @@ export const UserDashboard = () => {
     const column = Object.keys(tableData[0]);
     const thData = () => {
         return column.filter(key => key !== "id").map((data) => {
-            return <th key={data}>{data.charAt(0).toUpperCase()+data.slice(1)}</th>
+            return <th key={data}>{data.charAt(0).toUpperCase() + data.slice(1)}</th>
         })
     }
     const tdData = () => {
-        return tableData.map((data) => {   
+        return tableData.map((data) => {
             return (
                 <tr key={data.id}>
                     {
                         column.map((value) => {
                             //  console.log(value);
-                            if (value !== "id")
-                                return <td key={value}>{data[value]}</td>
+                            if (value !== "id") {
+                                if (value == "investment") {
+                                    // console.log(value);
+                                    return <td key={value}>
+                                        <Link to={`/portfolio/${data[value]}`}>
+                                            {data[value]}
+                                        </Link></td>
+                                }
+                                else {
+                                    return <td key={value}>{data[value]}</td>
+                                }
+                            }
                         })
                     }
                     <td>
@@ -69,7 +79,7 @@ export const UserDashboard = () => {
                             color="danger"
                             outline
                             size="sm"
-                            onClick={()=>handleDeleteItem(data.id)}
+                            onClick={() => handleDeleteItem(data.id)}
                         >
                             Delete
                         </Button>
@@ -103,7 +113,7 @@ export const UserDashboard = () => {
                                 name="investment"
                                 type="select"
                                 placeholder="Investment Type"
-                                onChange={(e) => handleChange(e, 'investment')} 
+                                onChange={(e) => handleChange(e, 'investment')}
                                 value={tableData.Investment}
                             >
                                 <option>
@@ -134,7 +144,7 @@ export const UserDashboard = () => {
                                 type="date"
                                 // defaultValue={new Date().toLocaleDateString()}
                                 // defaultValue={new Date().toISOString().slice(0, 10)}
-                                onChange={(e) => handleChange(e, 'date')} 
+                                onChange={(e) => handleChange(e, 'date')}
                                 value={tableData.Date}
                             />
                         </td>
@@ -144,7 +154,7 @@ export const UserDashboard = () => {
                                 name="amount"
                                 placeholder="Amount"
                                 type="number"
-                                onChange={(e) => handleChange(e, 'amount')} 
+                                onChange={(e) => handleChange(e, 'amount')}
                                 value={tableData.Amount}
                             />
                         </td>
@@ -166,10 +176,10 @@ export const UserDashboard = () => {
     }
 
     const calculateTotal = () => {
-        const sum = tableData.map((data)=>data?.amount).reduce(add,0);
+        const sum = tableData.map((data) => data?.amount).reduce(add, 0);
         function add(accumulator, a) {
             return parseInt(accumulator) + parseInt(a);
-          }
+        }
         return sum;
     }
 
@@ -222,9 +232,9 @@ export const UserDashboard = () => {
             </Row>
             {(showModal) && (
                 <>
-                    <AlertDialog 
-                        msg={"Do you really want to delete record?"} 
-                        isOpen={showModal} 
+                    <AlertDialog
+                        msg={"Do you really want to delete record?"}
+                        isOpen={showModal}
                         onCancel={handleCancel}
                         onConfirm={handleConfirm}
                     />

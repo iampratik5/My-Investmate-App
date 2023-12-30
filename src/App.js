@@ -8,12 +8,13 @@ import SignUp from './Pages/SignUp';
 import Home from './Pages/Home';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { UserDashboard } from './Pages/UserDashboard';
+import { Dashboard } from './Pages/Dashboard';
 import { PrivateRoute } from './components/PrivateRoute';
 import { UserProfile } from './Pages/UserProfile';
 import { UserProvider } from './context/UserProvider';
 import { ChangePassword } from './Pages/ChangePassword';
 import OTPInputBox from './components/OTPInputBox';
+import { Portfolio } from './Pages/Portfolio';
 
 const router = createBrowserRouter([
   {
@@ -45,10 +46,20 @@ const router = createBrowserRouter([
       {
         index: true,
         path: "dashboard", 
-        element: <UserDashboard />
+        element: <Dashboard />
       }
     ],
   },
+  {
+    path: "/portfolio/:investmentType",
+    element: <PrivateRoute />,
+    children: [
+      {
+        index: true,
+        element: <Portfolio />
+      },
+    ]
+  }
 ]);
 
 function App() {
